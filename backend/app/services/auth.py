@@ -14,7 +14,7 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.models.auth import User, Session, Group, ROLE_PERMISSIONS, Permissions
+from app.models.auth import User, Session, Group, ROLE_PERMISSIONS, Permissions, UserGroupLink
 from app.core.config import settings
 
 
@@ -160,10 +160,6 @@ class AuthService:
             await self.session.commit()
             return True
         return False
-    
-from app.models.auth import User, Session, Group, ROLE_PERMISSIONS, Permissions, UserGroupLink
-
-# ... (imports remain)
 
     async def create_user(
         self, 
@@ -218,14 +214,7 @@ from app.models.auth import User, Session, Group, ROLE_PERMISSIONS, Permissions,
     
     async def list_users(self) -> list[User]:
         """List all users"""
-        # We need to eagerly load groups if we want to return them, but for list maybe not efficient?
-        # Let's keep it simple. The UserResponse now expects group_ids.
-        # Async loading of relationships needs explicit options or separate queries.
-        # For simplicity in this iteration, let's fetch basic user info.
-        # If we need group_ids, we might need a joined load or separate query.
-        # Let's stick to basic user props for list to avoid N+1 issues for now,
-        # OR implementation of loading group_ids is needed for the response model modification.
-        
+
         result = await self.session.execute(select(User))
         return result.scalars().all()
     
