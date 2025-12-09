@@ -1,31 +1,25 @@
-import sqlite3
+import asyncio
 import os
+from sqlmodel import SQLModel
+from sqlalchemy.ext.asyncio import create_async_engine
 
-DB_PATH = "hubbops.db"
+# Import models to ensure they are registered with SQLModel
+from app.models.auth import User, Session, Group, UserGroupLink
+from app.models.service import Service
 
-def migrate():
-    if not os.path.exists(DB_PATH):
-        print("Database not found, skipping migration (will be created fresh)")
-        return
+# Database URL (should match backend config)
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:////data/services.db")
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+async def init_db():
+    print(f"Initializing database at {DATABASE_URL}...")
+    engine = create_async_engine(DATABASE_URL, echo=True)
     
-    try:
-        # Check if column exists
-        cursor.execute("SELECT deleted_at FROM service LIMIT 1")
-    except sqlite3.OperationalError:
-        print("Adding deleted_at column to service table...")
-        try:
-            cursor.execute("ALTER TABLE service ADD COLUMN deleted_at TIMESTAMP")
-            conn.commit()
-            print("Migration successful")
-        except Exception as e:
-            print(f"Migration failed: {e}")
-    else:
-        print("Column deleted_at already exists")
-    
-    conn.close()
+    async with engine.begin() as conn:
+        # Create all tables defined in SQLModel metadata
+        await conn.run_sync(SQLModel.metadata.create_all)
+        print("✅ Database tables created successfully!")
+
+    await engine.dispose()
 
 if __name__ == "__main__":
-    migrate()
+    asyncio.run(init_db())
