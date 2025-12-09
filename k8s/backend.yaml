@@ -90,44 +90,24 @@ spec:
         volumeMounts:
         - name: docker-socket
           mountPath: /var/run/docker.sock
-        - name: ssh-keys
-          mountPath: /root/.ssh/id_ed25519_hub
-          subPath: id_ed25519_hub
-        - name: ssh-keys
-          mountPath: /root/.ssh/id_ed25519_cripto
-          subPath: id_ed25519_cripto
-        - name: ssh-keys
-          mountPath: /root/.ssh/id_ed25519_infra
-          subPath: id_ed25519_infra
-        - name: ssh-config
-          mountPath: /root/.ssh/config
-          subPath: config
         - name: data
           mountPath: /data
         livenessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 15
-          periodSeconds: 10
+          initialDelaySeconds: 30
+          periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 10
-          periodSeconds: 5
+          initialDelaySeconds: 20
+          periodSeconds: 10
       volumes:
       - name: docker-socket
         hostPath:
           path: /var/run/docker.sock
-      - name: ssh-keys
-        secret:
-          secretName: backend-ssh-keys
-          defaultMode: 0600
-      - name: ssh-config
-        configMap:
-          name: backend-ssh-config
-          defaultMode: 0600
       - name: data
         persistentVolumeClaim:
           claimName: hubbops-backend-data
