@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaniko-builder
+  namespace: hubbops
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kaniko-builder
+  namespace: hubbops
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kaniko-builder
+  namespace: hubbops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kaniko-builder
+subjects:
+# Allow the backend ServiceAccount to create Kaniko jobs
+- kind: ServiceAccount
+  name: hubbops-backend
+  namespace: hubbops

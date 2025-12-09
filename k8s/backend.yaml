@@ -80,6 +80,11 @@ spec:
           value: "ssh -o StrictHostKeyChecking=no"
         - name: GRAFANA_URL
           value: "http://grafana.monitoring.svc.cluster.local:80"
+        # Kaniko configuration
+        - name: KANIKO_REGISTRY
+          value: "k3d-devlab-registry:5000"
+        - name: KANIKO_INSECURE
+          value: "true"
         resources:
           requests:
             memory: "128Mi"
@@ -88,8 +93,6 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         volumeMounts:
-        - name: docker-socket
-          mountPath: /var/run/docker.sock
         - name: data
           mountPath: /data
         livenessProbe:
@@ -105,9 +108,6 @@ spec:
           initialDelaySeconds: 20
           periodSeconds: 10
       volumes:
-      - name: docker-socket
-        hostPath:
-          path: /var/run/docker.sock
       - name: data
         persistentVolumeClaim:
           claimName: hubbops-backend-data

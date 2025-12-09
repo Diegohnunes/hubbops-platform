@@ -75,59 +75,174 @@ class BaseHandler(ABC):
     
     def get_image_name(self) -> str:
         """Get the Docker image name for this service"""
-        from config import get_config
-        cfg = get_config()
-        return cfg.get_image_name(self.service.name, "v1.0")
+        # Use Kaniko registry for image destination
+        registry = os.environ.get("KANIKO_REGISTRY", "k3d-devlab-registry:5000")
+        return f"{registry}/{self.service.name}:v1.0"
     
     def build_image(self) -> bool:
-        """Build Docker image for the service"""
-        from config import get_config
-        cfg = get_config()
+        """Build Docker image using Kaniko (runs as K8s Job)"""
+        import json
+        import time
+        import uuid
         
         code_dir = os.path.join(self.base_dir, "apps", self.service.name)
         image_name = self.get_image_name()
+        job_name = f"kaniko-{self.service.name}-{uuid.uuid4().hex[:8]}"
+        
+        # Kaniko registry config
+        registry = os.environ.get("KANIKO_REGISTRY", "k3d-devlab-registry:5000")
+        insecure = os.environ.get("KANIKO_INSECURE", "true").lower() == "true"
         
         print(f"   Building image: {image_name}")
+        print(f"   Using Kaniko job: {job_name}")
+        
+        # First, copy build context to shared PVC
+        # The backend mounts /data which Kaniko will also mount
+        build_context_path = f"/data/build-contexts/{self.service.name}"
+        os.makedirs(build_context_path, exist_ok=True)
+        
+        # Copy code to build context
+        import shutil
+        if os.path.exists(build_context_path):
+            shutil.rmtree(build_context_path)
+        shutil.copytree(code_dir, build_context_path)
+        print(f"   ✅ Build context prepared at {build_context_path}")
+        
+        # Create Kaniko job manifest
+        # PVC is mounted at /workspace in Kaniko, and /data in backend
+        # So /data/build-contexts/{name} becomes /workspace/build-contexts/{name}
+        kaniko_args = [
+            f"--context=dir:///workspace/build-contexts/{self.service.name}",
+            f"--dockerfile=/workspace/build-contexts/{self.service.name}/Dockerfile",
+            f"--destination={image_name}",
+            "--cache=true",
+            "--cache-ttl=24h",
+        ]
+        
+        if insecure:
+            kaniko_args.extend([
+                "--insecure",
+                f"--insecure-registry={registry}"
+            ])
+        
+        job_manifest = {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "metadata": {
+                "name": job_name,
+                "namespace": "hubbops",
+                "labels": {"app": "kaniko", "managed-by": "hubbops"}
+            },
+            "spec": {
+                "backoffLimit": 0,
+                "ttlSecondsAfterFinished": 300,
+                "template": {
+                    "metadata": {"labels": {"app": "kaniko"}},
+                    "spec": {
+                        "restartPolicy": "Never",
+                        "containers": [{
+                            "name": "kaniko",
+                            "image": "gcr.io/kaniko-project/executor:latest",
+                            "args": kaniko_args,
+                            "volumeMounts": [{
+                                "name": "build-context",
+                                "mountPath": "/workspace"
+                            }],
+                            "resources": {
+                                "requests": {"memory": "512Mi", "cpu": "250m"},
+                                "limits": {"memory": "2Gi", "cpu": "1"}
+                            }
+                        }],
+                        "volumes": [{
+                            "name": "build-context",
+                            "persistentVolumeClaim": {"claimName": "hubbops-backend-data"}
+                        }]
+                    }
+                }
+            }
+        }
+        
+        # Write job manifest to temp file and apply
+        job_file = f"/tmp/{job_name}.json"
+        with open(job_file, "w") as f:
+            json.dump(job_manifest, f)
+        
         result = subprocess.run(
-            f"docker build -t {image_name} {code_dir}",
+            f"kubectl apply -f {job_file}",
             shell=True,
-            cwd=self.base_dir,
             capture_output=True,
             text=True
         )
         
         if result.returncode != 0:
-            print(f"   ❌ Build failed: {result.stderr[:200]}")
+            print(f"   ❌ Failed to create Kaniko job: {result.stderr[:200]}")
             return False
         
-        print(f"   ✅ Image built")
-        return True
+        print(f"   ⏳ Kaniko job created, waiting for build...")
+        
+        # Wait for job to complete (with timeout)
+        timeout = 600  # 10 minutes
+        start_time = time.time()
+        
+        while time.time() - start_time < timeout:
+            # Check job status using succeeded/failed counters (more reliable)
+            succeeded_result = subprocess.run(
+                f"kubectl get job {job_name} -n hubbops -o jsonpath='{{.status.succeeded}}'",
+                shell=True,
+                capture_output=True,
+                text=True
+            )
+            failed_result = subprocess.run(
+                f"kubectl get job {job_name} -n hubbops -o jsonpath='{{.status.failed}}'",
+                shell=True,
+                capture_output=True,
+                text=True
+            )
+            
+            succeeded = succeeded_result.stdout.strip()
+            failed = failed_result.stdout.strip()
+            
+            if succeeded == "1":
+                print(f"   ✅ Image built and pushed: {image_name}")
+                # Cleanup
+                try:
+                    os.remove(job_file)
+                except:
+                    pass
+                return True
+            elif failed == "1":
+                # Get logs for debugging
+                log_result = subprocess.run(
+                    f"kubectl logs -n hubbops -l job-name={job_name} --tail=50",
+                    shell=True,
+                    capture_output=True,
+                    text=True
+                )
+                print(f"   ❌ Kaniko build failed. Last logs:")
+                print(f"   {log_result.stdout[-500:]}")
+                return False
+            
+            # Print progress (get pod logs)
+            log_result = subprocess.run(
+                f"kubectl logs -n hubbops -l job-name={job_name} --tail=1 2>/dev/null",
+                shell=True,
+                capture_output=True,
+                text=True
+            )
+            if log_result.stdout.strip():
+                print(f"   {log_result.stdout.strip()}")
+            
+            time.sleep(5)
+        
+        print(f"   ❌ Kaniko build timed out after {timeout}s")
+        return False
     
     def import_to_k3d(self) -> bool:
-        """Import image to k3d cluster"""
-        from config import get_config
-        cfg = get_config()
-        
-        if not cfg.k3d_cluster:
-            print("   ⚠️  No k3d cluster configured, skipping import")
-            return True
-        
-        image_name = self.get_image_name()
-        print(f"   Importing to k3d cluster: {cfg.k3d_cluster}")
-        
-        result = subprocess.run(
-            f"k3d image import {image_name} -c {cfg.k3d_cluster}",
-            shell=True,
-            cwd=self.base_dir,
-            capture_output=True,
-            text=True
-        )
-        
-        if result.returncode != 0:
-            print(f"   ⚠️  Import failed (may not affect local dev): {result.stderr[:100]}")
-            return False
-        
-        print(f"   ✅ Image imported")
+        """
+        Import to k3d is no longer needed with Kaniko.
+        Kaniko pushes directly to the registry which K3d can pull from.
+        """
+        print("   ℹ️  Skipping k3d import (Kaniko pushes to registry directly)")
         return True
 
     def _ensure_git_repo(self) -> bool:

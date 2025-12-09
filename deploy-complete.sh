@@ -7,24 +7,8 @@ echo "🚀 Complete Hubbops Deployment"
 echo "==============================="
 echo ""
 
-# Step 1: Fix Docker credentials
-echo "🔧 Step 1/4: Fixing Docker credentials..."
-if [ -f ~/.docker/config.json ]; then
-    cp ~/.docker/config.json ~/.docker/config.json.backup.$(date +%s) 2>/dev/null || true
-fi
-
-mkdir -p ~/.docker
-cat > ~/.docker/config.json << 'EOF'
-{
-  "auths": {}
-}
-EOF
-
-echo "✅ Docker config fixed"
-echo ""
-
-# Step 2: Build images
-echo "🔨 Step 2/4: Building images..."
+# Step 1: Build images
+echo "🔨 Step 1/3: Building images..."
 cd /home/diego/crypto-plataform/hubbops-platform
 docker build -f Dockerfile.frontend -t hubbops-frontend:latest . || {
     echo "❌ Frontend build failed"
@@ -38,8 +22,8 @@ docker build -f Dockerfile.backend -t hubbops-backend:latest . || {
 echo "✅ Images built"
 echo ""
 
-# Step 3: Import to K3d and restart
-echo "📥 Step 3/4: Importing to K3d..."
+# Step 2: Import to K3d and restart
+echo "📥 Step 2/3: Importing to K3d..."
 k3d image import hubbops-frontend:latest -c devlab
 k3d image import hubbops-backend:latest -c devlab
 
@@ -49,8 +33,8 @@ kubectl rollout restart deployment/hubbops-backend -n hubbops
 echo "✅ Deployments restarted"
 echo ""
 
-# Step 4: Recreate ArgoCD frontend if needed
-echo "🔄 Step 4/4: Checking ArgoCD Applications..."
+# Step 3: Recreate ArgoCD frontend if needed
+echo "🔄 Step 3/3: Checking ArgoCD Applications..."
 if ! kubectl get application crypto-frontend -n argocd &>/dev/null; then
     echo "📝 Recreating crypto-frontend ArgoCD Application..."
     kubectl apply -f /home/diego/crypto-plataform/infraestrutura-hubbops-plataform/gitops/apps/crypto-frontend.yaml
