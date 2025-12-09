@@ -10,7 +10,14 @@ app = FastAPI(
     version=settings.API_VERSION,
 )
 
-# ... (omitted for brevity)
+# CORS configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Include routers
 app.include_router(templates.router, prefix=settings.API_PREFIX)

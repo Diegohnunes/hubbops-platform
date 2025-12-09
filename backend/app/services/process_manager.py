@@ -44,7 +44,7 @@ manager = ConnectionManager()
 
 class ProcessManager:
     @staticmethod
-    async def run_command(command: str, service_id: str, cwd: str = None):
+    async def run_command(command: str, service_id: str, cwd: str = None, env: dict = None):
         """
         Run a shell command and stream output to WebSockets and DB.
         """
@@ -61,7 +61,8 @@ class ProcessManager:
                 command,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-                cwd=cwd
+                cwd=cwd,
+                env=env
             )
 
             # Read stdout and stderr concurrently
