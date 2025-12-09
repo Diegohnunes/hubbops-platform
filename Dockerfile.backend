@@ -1,0 +1,51 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    unzip \
+    docker.io \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/
+
+# Install Terraform
+RUN curl -O https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip && \
+    unzip terraform_1.5.7_linux_amd64.zip && \
+    mv terraform /usr/local/bin/ && \
+    rm terraform_1.5.7_linux_amd64.zip
+
+# Install k3d
+RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+# Install python dependencies
+# Install python dependencies
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend code
+COPY backend/app ./app
+COPY backend/migrate_db.py .
+COPY public/templates ./public/templates
+
+# Copy ops-cli and related directories
+COPY ops-cli/ ./ops-cli/
+# gitops, terraform, and apps are now in separate repositories
+# and will be cloned by ops-cli as needed.
+
+
+# Configure git user
+RUN git config --global user.email "backend@hubbops.local" && \
+    git config --global user.name "Hubbops Backend"
+
+# Expose port
+EXPOSE 8000
+
+# Run uvicorn
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

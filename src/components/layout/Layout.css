@@ -1,0 +1,34 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+}
+
+.layout-main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout-content {
+    flex: 1;
+    margin-top: var(--header-height);
+    padding: var(--space-8);
+    max-width: var(--content-max-width);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .layout-main {
+        margin-left: 0;
+    }
+
+    .layout-content {
+        padding: var(--space-4);
+    }
+}

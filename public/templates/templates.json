@@ -1,0 +1,580 @@
+{
+    "templates": [
+        {
+            "id": "simple-service",
+            "name": "Simple Service",
+            "description": "Minimal Kubernetes deployment with Service and optional Ingress",
+            "category": "Others",
+            "icon": "box",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "basic",
+                "stateless"
+            ],
+            "schema": "/templates/simple-service.json"
+        },
+        {
+            "id": "crypto-collector",
+            "name": "Crypto Collector",
+            "description": "Cryptocurrency price collector with Grafana dashboard",
+            "category": "Observability",
+            "icon": "trending-up",
+            "status": "ready",
+            "tags": [
+                "crypto",
+                "monitoring",
+                "data"
+            ],
+            "schema": "/templates/crypto-collector.json"
+        },
+        {
+            "id": "python-service",
+            "name": "Python Service",
+            "description": "Python application with Gunicorn, health checks and metrics",
+            "category": "Backend",
+            "icon": "code",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "python",
+                "backend"
+            ],
+            "schema": "/templates/python-service.json"
+        },
+        {
+            "id": "go-service",
+            "name": "Go Service",
+            "description": "Optimized Go application with multi-stage build",
+            "category": "Backend",
+            "icon": "code",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "go",
+                "backend"
+            ],
+            "schema": "/templates/go-service.json"
+        },
+        {
+            "id": "frontend-app",
+            "name": "Frontend App",
+            "description": "React/Vue/Next.js application served with Nginx",
+            "category": "Frontend",
+            "icon": "layout",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "frontend",
+                "react"
+            ],
+            "schema": "/templates/frontend-app.json"
+        },
+        {
+            "id": "postgresql",
+            "name": "PostgreSQL",
+            "description": "PostgreSQL database with persistent storage and backups",
+            "category": "Database",
+            "icon": "database",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "database",
+                "sql"
+            ],
+            "schema": "/templates/postgresql.json"
+        },
+        {
+            "id": "redis",
+            "name": "Redis Cache",
+            "description": "Redis for caching and message brokering",
+            "category": "Database",
+            "icon": "layers",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "cache",
+                "redis"
+            ],
+            "schema": "/templates/redis.json"
+        },
+        {
+            "id": "job-cronjob-worker",
+            "name": "Job / CronJob Worker",
+            "description": "Template for Kubernetes workloads that run one-time or recurring tasks. Includes CronJobs, retries, and failure policies.",
+            "category": "Kubernetes",
+            "icon": "clock",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "worker",
+                "jobs",
+                "cronjob"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "ingress-cert-manager",
+            "name": "Ingress + Cert-Manager",
+            "description": "Ingress configuration template with Cert-Manager, automatic TLS, and standard routing rules.",
+            "category": "Kubernetes",
+            "icon": "network",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "ingress",
+                "tls",
+                "networking"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "horizontal-autoscaling",
+            "name": "Horizontal Autoscaling (HPA)",
+            "description": "Template with HPA configured based on CPU/Memory and custom metrics.",
+            "category": "Kubernetes",
+            "icon": "gauge",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "autoscaling",
+                "hpa"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "stateful-service",
+            "name": "Stateful Service",
+            "description": "Kubernetes deployment for stateful applications using StatefulSet, PVC, and advanced readiness.",
+            "category": "Kubernetes",
+            "icon": "hard-drive",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "stateful",
+                "storage"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "sidecar-pattern",
+            "name": "Sidecar Pattern Template",
+            "description": "Template with sidecar containers for logging, service mesh proxies (Envoy/Linkerd), or file synchronization.",
+            "category": "Kubernetes",
+            "icon": "package",
+            "status": "ready",
+            "tags": [
+                "kubernetes",
+                "sidecar",
+                "service mesh"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "nodejs-service",
+            "name": "Node.js Service",
+            "description": "Node.js application using PM2-like process management, health checks, metrics, and optimized Docker build.",
+            "category": "Backend",
+            "icon": "server",
+            "status": "ready",
+            "tags": [
+                "node",
+                "backend",
+                "kubernetes"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "java-spring-boot",
+            "name": "Java / Spring Boot Service",
+            "description": "Spring Boot microservice with optimized JAR build, liveness/readiness probes, and autoscaling.",
+            "category": "Backend",
+            "icon": "coffee",
+            "status": "ready",
+            "tags": [
+                "java",
+                "backend",
+                "kubernetes"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "grpc-service",
+            "name": "gRPC Backend Service",
+            "description": "Backend microservice using gRPC with autoscaling based on request throughput.",
+            "category": "Backend",
+            "icon": "radio",
+            "status": "ready",
+            "tags": [
+                "grpc",
+                "backend",
+                "kubernetes"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "static-website",
+            "name": "Static Website (Hugo / Jekyll / Astro)",
+            "description": "Static site served with Nginx or deployed to CloudFront.",
+            "category": "Frontend",
+            "icon": "globe",
+            "status": "ready",
+            "tags": [
+                "frontend",
+                "static",
+                "website"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "mysql",
+            "name": "MySQL",
+            "description": "MySQL database with PVC, backup configuration, and optional replicas.",
+            "category": "Database",
+            "icon": "database",
+            "status": "ready",
+            "tags": [
+                "database",
+                "sql",
+                "mysql",
+                "kubernetes"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "mongodb",
+            "name": "MongoDB",
+            "description": "MongoDB NoSQL database",
+            "category": "Database",
+            "icon": "file-json",
+            "status": "coming-soon",
+            "tags": [
+                "kubernetes",
+                "nosql",
+                "database"
+            ]
+        },
+        {
+            "id": "minio",
+            "name": "MinIO",
+            "description": "S3-compatible object storage running on Kubernetes.",
+            "category": "Others",
+            "icon": "hard-drive",
+            "status": "ready",
+            "tags": [
+                "storage",
+                "object-storage",
+                "kubernetes"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "prometheus-exporter",
+            "name": "Prometheus Exporter Service",
+            "description": "Service template with metric exporters (Node Exporter, Blackbox Exporter, or custom).",
+            "category": "Observability",
+            "icon": "activity",
+            "status": "ready",
+            "tags": [
+                "monitoring",
+                "prometheus",
+                "metrics"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "otel-collector",
+            "name": "OpenTelemetry Collector",
+            "description": "Configurable OpenTelemetry Collector instance for logs, metrics, and tracing pipelines.",
+            "category": "Observability",
+            "icon": "radar",
+            "status": "ready",
+            "tags": [
+                "observability",
+                "otel",
+                "logs",
+                "tracing"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "grafana-dashboard",
+            "name": "Grafana Dashboard Template",
+            "description": "Standard dashboard template with latency, error, and throughput visualizations.",
+            "category": "Observability",
+            "icon": "bar-chart",
+            "status": "ready",
+            "tags": [
+                "grafana",
+                "dashboards",
+                "monitoring"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "load-testing",
+            "name": "Load Testing Service (k6 / Locust)",
+            "description": "Template for performance testing using k6 or Locust, integrated with CI/CD or manual execution.",
+            "category": "Others",
+            "icon": "zap",
+            "status": "ready",
+            "tags": [
+                "performance",
+                "testing",
+                "load-test"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "rabbitmq",
+            "name": "RabbitMQ Queue",
+            "description": "Traditional message broker with queues, exchanges, and configurable bindings.",
+            "category": "Messaging",
+            "icon": "mail",
+            "status": "ready",
+            "tags": [
+                "messaging",
+                "rabbitmq",
+                "broker"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "kafka",
+            "name": "Kafka Cluster / Topic",
+            "description": "Provisioning of Kafka clusters or topics for event streaming and messaging.",
+            "category": "Messaging",
+            "icon": "workflow",
+            "status": "coming-soon",
+            "tags": [
+                "kafka",
+                "streaming",
+                "messaging"
+            ]
+        },
+        {
+            "id": "s3-bucket",
+            "name": "S3 Bucket",
+            "description": "AWS S3 bucket for object storage",
+            "category": "Cloud",
+            "icon": "cloud",
+            "status": "ready",
+            "tags": [
+                "aws",
+                "storage",
+                "cloud"
+            ],
+            "schema": "/templates/generic-service.json"
+        },
+        {
+            "id": "lambda",
+            "name": "AWS Lambda",
+            "description": "Serverless function on AWS Lambda",
+            "category": "Cloud",
+            "icon": "zap",
+            "status": "coming-soon",
+            "tags": [
+                "aws",
+                "serverless",
+                "cloud"
+            ]
+        },
+        {
+            "id": "aws-rds",
+            "name": "AWS RDS Instance",
+            "description": "Provisioning of a managed relational database on AWS RDS using Terraform.",
+            "category": "Cloud",
+            "icon": "database",
+            "status": "coming-soon",
+            "tags": [
+                "aws",
+                "database",
+                "terraform"
+            ]
+        },
+        {
+            "id": "aws-dynamodb",
+            "name": "AWS DynamoDB Table",
+            "description": "Serverless and scalable NoSQL table on DynamoDB with partition keys and TTL configuration.",
+            "category": "Cloud",
+            "icon": "table",
+            "status": "coming-soon",
+            "tags": [
+                "aws",
+                "nosql",
+                "cloud"
+            ]
+        },
+        {
+            "id": "aws-ecs-fargate",
+            "name": "AWS ECS Fargate Service",
+            "description": "Serverless containerized service on ECS Fargate with Auto Scaling and Load Balancer.",
+            "category": "Cloud",
+            "icon": "container",
+            "status": "coming-soon",
+            "tags": [
+                "aws",
+                "containers",
+                "fargate"
+            ]
+        },
+        {
+            "id": "aws-cloudfront",
+            "name": "AWS CloudFront Distribution",
+            "description": "CDN with caching, compression, HTTPS, and integration with S3 or API Gateway.",
+            "category": "Cloud",
+            "icon": "globe",
+            "status": "coming-soon",
+            "tags": [
+                "aws",
+                "cloudfront",
+                "cdn"
+            ]
+        },
+        {
+            "id": "vault-secrets",
+            "name": "Secrets Management (Vault)",
+            "description": "Integration with HashiCorp Vault for dynamic secrets and automated rotation.",
+            "category": "Cloud",
+            "icon": "lock",
+            "status": "coming-soon",
+            "tags": [
+                "vault",
+                "secrets",
+                "security"
+            ]
+        },
+        {
+            "id": "gcp-cloud-sql",
+            "name": "GCP Cloud SQL Instance",
+            "description": "Managed relational database deployment (PostgreSQL/MySQL) on Cloud SQL.",
+            "category": "Cloud",
+            "icon": "database",
+            "status": "coming-soon",
+            "tags": [
+                "gcp",
+                "database",
+                "sql",
+                "cloud"
+            ]
+        },
+        {
+            "id": "gcp-cloud-run",
+            "name": "GCP Cloud Run Service",
+            "description": "Fully serverless container execution environment with automatic scaling to zero.",
+            "category": "Cloud",
+            "icon": "container",
+            "status": "coming-soon",
+            "tags": [
+                "gcp",
+                "serverless",
+                "containers",
+                "cloud run"
+            ]
+        },
+        {
+            "id": "gcp-pubsub",
+            "name": "GCP Pub/Sub Topic & Subscription",
+            "description": "Event-driven messaging system with topics, subscriptions, and push/pull consumers.",
+            "category": "Cloud",
+            "icon": "mail",
+            "status": "coming-soon",
+            "tags": [
+                "gcp",
+                "messaging",
+                "pubsub"
+            ]
+        },
+        {
+            "id": "gcp-gke",
+            "name": "GCP GKE Cluster Deployment",
+            "description": "Template to deploy workloads directly into Google Kubernetes Engine (GKE).",
+            "category": "Cloud",
+            "icon": "box",
+            "status": "coming-soon",
+            "tags": [
+                "gcp",
+                "kubernetes",
+                "gke"
+            ]
+        },
+        {
+            "id": "gcp-cloud-storage",
+            "name": "GCP Cloud Storage Bucket",
+            "description": "Object storage bucket with lifecycle rules, versioning, and IAM policies.",
+            "category": "Cloud",
+            "icon": "cloud",
+            "status": "coming-soon",
+            "tags": [
+                "gcp",
+                "storage",
+                "gcs"
+            ]
+        },
+        {
+            "id": "azure-sql",
+            "name": "Azure SQL Database",
+            "description": "Managed Azure SQL database with autoscaling and automated backups.",
+            "category": "Cloud",
+            "icon": "database",
+            "status": "coming-soon",
+            "tags": [
+                "azure",
+                "database",
+                "sql"
+            ]
+        },
+        {
+            "id": "azure-container-apps",
+            "name": "Azure Container Apps Service",
+            "description": "Serverless containers with revisions, autoscaling, and integrated observability.",
+            "category": "Cloud",
+            "icon": "container",
+            "status": "coming-soon",
+            "tags": [
+                "azure",
+                "containers",
+                "serverless"
+            ]
+        },
+        {
+            "id": "azure-service-bus",
+            "name": "Azure Service Bus Queue",
+            "description": "Messaging queue for enterprise event-driven architectures.",
+            "category": "Cloud",
+            "icon": "mail",
+            "status": "coming-soon",
+            "tags": [
+                "azure",
+                "messaging",
+                "servicebus"
+            ]
+        },
+        {
+            "id": "azure-aks",
+            "name": "Azure AKS Deployment",
+            "description": "Template to deploy services on Azure Kubernetes Service (AKS).",
+            "category": "Cloud",
+            "icon": "box",
+            "status": "coming-soon",
+            "tags": [
+                "azure",
+                "kubernetes",
+                "aks"
+            ]
+        },
+        {
+            "id": "azure-blob-storage",
+            "name": "Azure Blob Storage",
+            "description": "Highly scalable object storage service with lifecycle policies and encryption.",
+            "category": "Cloud",
+            "icon": "cloud",
+            "status": "coming-soon",
+            "tags": [
+                "azure",
+                "storage",
+                "blob"
+            ]
+        }
+    ]
+}

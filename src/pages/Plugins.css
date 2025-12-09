@@ -1,0 +1,140 @@
+.plugins-page {
+    padding: var(--space-6);
+}
+
+.plugins-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-6);
+}
+
+.plugins-page .page-header h1 {
+    margin: 0 0 var(--space-2) 0;
+    font-size: 1.75rem;
+}
+
+.plugins-page .page-header p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.plugins-page .coming-soon-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-6);
+    color: var(--text-primary);
+}
+
+.plugins-page .coming-soon-banner svg {
+    color: #a855f7;
+    flex-shrink: 0;
+}
+
+.plugins-page .search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-6);
+}
+
+.plugins-page .search-bar svg {
+    color: var(--text-muted);
+}
+
+.plugins-page .search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.plugins-page .search-bar input::placeholder {
+    color: var(--text-muted);
+}
+
+.plugins-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.plugin-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plugin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.plugin-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+    border-radius: var(--radius-lg);
+    color: #a855f7;
+    flex-shrink: 0;
+}
+
+.plugin-info {
+    flex: 1;
+}
+
+.plugin-info h3 {
+    margin: 0 0 var(--space-1) 0;
+    font-size: 1.1rem;
+}
+
+.plugin-info p {
+    margin: 0 0 var(--space-2) 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.plugin-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-size: 0.8rem;
+}
+
+.plugin-meta .version {
+    color: var(--text-muted);
+}
+
+.plugin-meta .status {
+    font-weight: 500;
+}
+
+.plugin-meta .status.installed {
+    color: #10b981;
+}
+
+.plugin-meta .status.available {
+    color: var(--text-secondary);
+}
+
+.plugin-card button {
+    flex-shrink: 0;
+}

@@ -1,0 +1,88 @@
+import { Box, Database, Server, Globe, Lock, Cloud, HardDrive } from 'lucide-react';
+
+export const templates = [
+    {
+        id: 'simple-service',
+        name: 'Simple Service',
+        description: 'Basic Kubernetes deployment with ClusterIP service.',
+        icon: Box,
+        tags: ['Kubernetes', 'Stateless'],
+        color: 'text-blue-500',
+        bgColor: 'bg-blue-500/10',
+        fields: [
+            { key: 'cpu_limit', label: 'CPU Limit', type: 'text', default: '500m' },
+            { key: 'memory_limit', label: 'Memory Limit', type: 'text', default: '256Mi' },
+            { key: 'image', label: 'Container Image', type: 'text', placeholder: 'nginx:latest' },
+            { key: 'replicas', label: 'Replicas', type: 'number', default: 1 },
+            { key: 'ingress', label: 'Enable Ingress', type: 'boolean' },
+        ]
+    },
+    {
+        id: 'python-service',
+        name: 'Python Service',
+        description: 'Python application with Gunicorn and optional Celery worker.',
+        icon: Server,
+        tags: ['Python', 'Backend', 'API'],
+        color: 'text-yellow-500',
+        bgColor: 'bg-yellow-500/10',
+        fields: [
+            { key: 'python_version', label: 'Python Version', type: 'select', options: ['3.8', '3.10', '3.11'] },
+            { key: 'port', label: 'Expose Port', type: 'number', default: 8000 },
+            { key: 'use_gunicorn', label: 'Use Gunicorn', type: 'boolean' },
+        ]
+    },
+    {
+        id: 'go-service',
+        name: 'Go Service',
+        description: 'High-performance Go application with multi-stage build.',
+        icon: Server,
+        tags: ['Go', 'Backend', 'High Perf'],
+        color: 'text-cyan-500',
+        bgColor: 'bg-cyan-500/10',
+    },
+    {
+        id: 'frontend-app',
+        name: 'Frontend App',
+        description: 'React/Vue/Next.js application served via Nginx.',
+        icon: Globe,
+        tags: ['Frontend', 'React', 'Vue'],
+        color: 'text-purple-500',
+        bgColor: 'bg-purple-500/10',
+    },
+    {
+        id: 'postgres-db',
+        name: 'PostgreSQL',
+        description: 'Managed PostgreSQL instance with backup configuration.',
+        icon: Database,
+        tags: ['Database', 'SQL', 'Stateful'],
+        color: 'text-indigo-500',
+        bgColor: 'bg-indigo-500/10',
+    },
+    {
+        id: 's3-bucket',
+        name: 'S3 Bucket',
+        description: 'Private or public S3 bucket with lifecycle policies.',
+        icon: HardDrive,
+        tags: ['Storage', 'AWS'],
+        color: 'text-orange-500',
+        bgColor: 'bg-orange-500/10',
+    },
+    {
+        id: 'secret',
+        name: 'Secret',
+        description: 'Securely store API keys and sensitive configuration.',
+        icon: Lock,
+        tags: ['Security', 'Config'],
+        color: 'text-red-500',
+        bgColor: 'bg-red-500/10',
+    },
+    {
+        id: 'aws-lambda',
+        name: 'AWS Lambda',
+        description: 'Serverless function with event triggers.',
+        icon: Cloud,
+        tags: ['AWS', 'Serverless'],
+        color: 'text-orange-600',
+        bgColor: 'bg-orange-600/10',
+    },
+];

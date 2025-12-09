@@ -1,0 +1,160 @@
+.topbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 16rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    background: var(--bg-primary, #0a0a0a);
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+    z-index: 10;
+}
+
+/* ==========================
+   SEARCH (melhorado)
+========================== */
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary, #6b7280);
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    height: 40px;
+    padding: 0.55rem 1rem 0.55rem 2.6rem;
+    background: var(--bg-secondary, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 0.6rem;
+    color: var(--text-primary, #ffffff);
+    font-size: 0.9rem;
+    transition: all 0.22s ease;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-tertiary, #6b7280);
+    opacity: 0.8;
+}
+
+.search-input:hover {
+    border-color: var(--border-color-hover, rgba(255, 255, 255, 0.18));
+}
+
+.search-input:focus {
+    border-color: var(--accent-primary, #3b82f6);
+    background: var(--bg-primary, rgba(0, 0, 0, 0.4));
+    box-shadow: 0 0 0 3px var(--accent-primary-light, rgba(59, 130, 246, 0.18));
+}
+
+/* ==========================
+   TOPBAR ACTIONS
+========================== */
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+/* ==========================
+   ICONE PADRÃO (melhorado)
+========================== */
+.icon-button {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary, rgba(255, 255, 255, 0.06));
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: var(--text-secondary, #9ca3af);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.icon-button:hover {
+    background: var(--bg-tertiary, rgba(255, 255, 255, 0.12));
+    border-color: var(--border-color, rgba(255, 255, 255, 0.2));
+    color: var(--text-primary, #ffffff);
+}
+
+.icon-button svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+}
+
+/* ==========================
+   NOTIFICAÇÃO
+========================== */
+.notification-button {
+    position: relative;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-error, #ef4444);
+    border: 2px solid var(--bg-primary, #0a0a0a);
+    border-radius: 50%;
+}
+
+/* ==========================
+   AVATAR (melhorado)
+========================== */
+.profile-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    padding: 0;
+    background: linear-gradient(135deg,
+            var(--accent-primary, #3b82f6),
+            var(--accent-info, #8b5cf6));
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+.profile-button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 1024px) {
+    .topbar {
+        left: 0;
+    }
+
+    .search-container {
+        max-width: 280px;
+    }
+}

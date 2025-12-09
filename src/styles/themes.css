@@ -1,0 +1,151 @@
+/* Theme System - Hubbops */
+
+/* === Dark Theme (Default) === */
+:root,
+[data-theme="dark"] {
+    /* Backgrounds */
+    --bg-primary: #0a0d14;
+    --bg-secondary: #151922;
+    --bg-tertiary: #1e2330;
+    --bg-hover: #252b3a;
+    --bg-active: #2d3548;
+
+    /* Text Colors */
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-tertiary: #6e7681;
+    --text-inverse: #0a0d14;
+
+    /* Accent Colors */
+    --accent-primary: #3b82f6;
+    --accent-primary-hover: #2563eb;
+    --accent-primary-light: rgba(59, 130, 246, 0.1);
+
+    --accent-success: #10b981;
+    --accent-success-hover: #059669;
+    --accent-success-light: rgba(16, 185, 129, 0.1);
+
+    --accent-warning: #f59e0b;
+    --accent-warning-hover: #d97706;
+    --accent-warning-light: rgba(245, 158, 11, 0.1);
+
+    --accent-error: #ef4444;
+    --accent-error-hover: #dc2626;
+    --accent-error-light: rgba(239, 68, 68, 0.1);
+
+    --accent-info: #06b6d4;
+    --accent-info-hover: #0891b2;
+    --accent-info-light: rgba(6, 182, 212, 0.1);
+
+    /* Borders */
+    --border-primary: #30363d;
+    --border-secondary: #21262d;
+    --border-focus: #3b82f6;
+
+    /* Overlays */
+    --overlay: rgba(0, 0, 0, 0.6);
+    --overlay-light: rgba(0, 0, 0, 0.3);
+
+    /* Sidebar specific */
+    --sidebar-bg: var(--bg-secondary);
+    --sidebar-border: var(--border-primary);
+    --sidebar-item-hover: var(--bg-hover);
+    --sidebar-item-active: var(--bg-active);
+
+    /* Header specific */
+    --header-bg: var(--bg-secondary);
+    --header-border: var(--border-primary);
+
+    /* Card specific */
+    --card-bg: var(--bg-secondary);
+    --card-border: var(--border-primary);
+    --card-hover: var(--bg-tertiary);
+
+    /* Input specific */
+    --input-bg: var(--bg-tertiary);
+    --input-border: var(--border-primary);
+    --input-focus-border: var(--border-focus);
+
+    /* Code block */
+    --code-bg: var(--bg-tertiary);
+    --code-text: #79c0ff;
+}
+
+/* === Light Theme === */
+[data-theme="light"] {
+    /* Backgrounds */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --bg-tertiary: #eaeef2;
+    --bg-hover: #dfe3e8;
+    --bg-active: #d0d7de;
+
+    /* Text Colors */
+    --text-primary: #24292f;
+    --text-secondary: #57606a;
+    --text-tertiary: #6e7781;
+    --text-inverse: #ffffff;
+
+    /* Accent Colors */
+    --accent-primary: #2563eb;
+    --accent-primary-hover: #1d4ed8;
+    --accent-primary-light: rgba(37, 99, 235, 0.1);
+
+    --accent-success: #059669;
+    --accent-success-hover: #047857;
+    --accent-success-light: rgba(5, 150, 105, 0.1);
+
+    --accent-warning: #d97706;
+    --accent-warning-hover: #b45309;
+    --accent-warning-light: rgba(217, 119, 6, 0.1);
+
+    --accent-error: #dc2626;
+    --accent-error-hover: #b91c1c;
+    --accent-error-light: rgba(220, 38, 38, 0.1);
+
+    --accent-info: #0891b2;
+    --accent-info-hover: #0e7490;
+    --accent-info-light: rgba(8, 145, 178, 0.1);
+
+    /* Borders */
+    --border-primary: #d0d7de;
+    --border-secondary: #e1e8ed;
+    --border-focus: #2563eb;
+
+    /* Overlays */
+    --overlay: rgba(0, 0, 0, 0.4);
+    --overlay-light: rgba(0, 0, 0, 0.2);
+
+    /* Sidebar specific */
+    --sidebar-bg: var(--bg-secondary);
+    --sidebar-border: var(--border-primary);
+    --sidebar-item-hover: var(--bg-hover);
+    --sidebar-item-active: var(--bg-active);
+
+    /* Header specific */
+    --header-bg: var(--bg-secondary);
+    --header-border: var(--border-primary);
+
+    /* Card specific */
+    --card-bg: var(--bg-secondary);
+    --card-border: var(--border-primary);
+    --card-hover: var(--bg-tertiary);
+
+    /* Input specific */
+    --input-bg: var(--bg-primary);
+    --input-border: var(--border-primary);
+    --input-focus-border: var(--border-focus);
+
+    /* Code block */
+    --code-bg: var(--bg-tertiary);
+    --code-text: #0969da;
+}
+
+/* Smooth theme transition */
+*,
+*::before,
+*::after {
+    transition: background-color var(--transition-base),
+        border-color var(--transition-base),
+        color var(--transition-base);
+}

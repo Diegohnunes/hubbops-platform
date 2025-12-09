@@ -1,0 +1,87 @@
+# HubbOps Platform Configuration
+# Copy this file to settings.yaml and customize for your environment
+
+platform:
+  name: "HubbOps"
+  description: "Internal Developer Platform"
+  base_url: "http://localhost:3000"
+
+# Docker configuration for building and pushing images
+docker:
+  # Your Docker registry (e.g., "docker.io/myorg", "ghcr.io/myorg", "myregistry.azurecr.io")
+  registry: "local"
+  # k3d cluster name for image imports (leave empty if not using k3d)
+  k3d_cluster: "devlab"
+  # Default image tag pattern
+  tag_pattern: "v1.0.{build}"
+
+# Git repositories for GitOps workflow
+git:
+  # Git provider: github, gitlab, bitbucket
+  provider: "github"
+  # SSH key name to use (should exist in backend secrets)
+  ssh_key_name: ""
+  repositories:
+    # Repository for application source code
+    apps:
+      url: ""
+      branch: "main"
+    # Repository for GitOps manifests (k8s, terraform)
+    infrastructure:
+      url: ""
+      branch: "main"
+
+# Kubernetes configuration
+kubernetes:
+  # Default namespace for new services
+  default_namespace: "default"
+  # Namespace for platform components
+  platform_namespace: "hubbops"
+
+# Integration with external tools
+integrations:
+  grafana:
+    enabled: true
+    # Leave empty to auto-detect from cluster
+    url: ""
+    # Namespace where Grafana is deployed
+    namespace: "monitoring"
+    # Create dashboards for new services automatically
+    auto_create_dashboards: true
+
+  argocd:
+    enabled: true
+    # Namespace where ArgoCD is deployed
+    namespace: "argocd"
+    # Enable auto-sync for new applications
+    auto_sync: true
+    # Prune resources that are removed from git
+    prune: true
+    # Self-heal drifted resources
+    self_heal: true
+
+  prometheus:
+    enabled: true
+    # Leave empty to auto-detect from cluster
+    url: ""
+    # Namespace where Prometheus is deployed
+    namespace: "monitoring"
+
+# Authentication configuration
+auth:
+  # Enable authentication (set to false for local dev)
+  enabled: false
+  # JWT secret (CHANGE THIS IN PRODUCTION - use a random 32+ char string)
+  # In production, set via HUBBOPS_AUTH_SECRET environment variable
+  jwt_secret: ""
+  # Token expiration in hours
+  token_expiry_hours: 24
+  # Allow self-registration
+  allow_registration: false
+  # Default admin email (created on first run)
+  default_admin_email: "admin@hubbops.local"
+
+# Logging configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "json"  # json, text

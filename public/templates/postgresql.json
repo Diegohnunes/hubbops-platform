@@ -1,0 +1,97 @@
+{
+    "id": "postgresql",
+    "name": "PostgreSQL Database",
+    "description": "PostgreSQL database with persistent storage and backups",
+    "fields": [
+        {
+            "key": "service_name",
+            "label": "Database Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "my-postgres-db",
+            "description": "Unique name for your PostgreSQL instance (DNS compatible)"
+        },
+        {
+            "key": "postgres_version",
+            "label": "PostgreSQL Version",
+            "type": "select",
+            "options": [
+                "13",
+                "14",
+                "15",
+                "16"
+            ],
+            "default": "15",
+            "description": "PostgreSQL server version"
+        },
+        {
+            "key": "database_name",
+            "label": "Initial Database",
+            "type": "text",
+            "required": true,
+            "placeholder": "myapp",
+            "description": "Name of the initial database to create"
+        },
+        {
+            "key": "username",
+            "label": "Database User",
+            "type": "text",
+            "required": true,
+            "placeholder": "appuser",
+            "description": "PostgreSQL username"
+        },
+        {
+            "key": "storage_size",
+            "label": "Storage Size",
+            "type": "select",
+            "options": [
+                "5Gi",
+                "10Gi",
+                "20Gi",
+                "50Gi",
+                "100Gi"
+            ],
+            "default": "10Gi",
+            "description": "Persistent volume size"
+        },
+        {
+            "key": "cpu_limit",
+            "label": "CPU Limit",
+            "type": "select",
+            "options": [
+                "500m",
+                "1000m",
+                "2000m"
+            ],
+            "default": "1000m",
+            "description": "Maximum CPU allocation"
+        },
+        {
+            "key": "memory_limit",
+            "label": "Memory Limit",
+            "type": "select",
+            "options": [
+                "512Mi",
+                "1Gi",
+                "2Gi",
+                "4Gi"
+            ],
+            "default": "1Gi",
+            "description": "Maximum memory allocation"
+        },
+        {
+            "key": "enable_connection_pool",
+            "label": "Enable Connection Pooling",
+            "type": "boolean",
+            "default": false,
+            "description": "Deploy PgBouncer for connection pooling"
+        },
+        {
+            "key": "enable_monitoring",
+            "label": "Enable Monitoring",
+            "type": "boolean",
+            "default": true,
+            "description": "Deploy PostgreSQL exporter for Prometheus"
+        }
+    ]
+}

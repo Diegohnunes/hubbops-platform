@@ -1,0 +1,100 @@
+{
+    "id": "crypto-collector",
+    "name": "Crypto Collector",
+    "description": "Cryptocurrency price collector with automatic Grafana dashboard",
+    "fields": [
+        {
+            "key": "service_name",
+            "label": "Service Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "btc-collector",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Collector name (will be the namespace). Use format: {coin}-collector"
+        },
+        {
+            "key": "coin",
+            "label": "Cryptocurrency",
+            "type": "select-or-custom",
+            "options": [
+                "BTC",
+                "ETH",
+                "DOT",
+                "SOL",
+                "ADA",
+                "MATIC",
+                "AVAX",
+                "custom"
+            ],
+            "default": "BTC",
+            "required": true,
+            "customPlaceholder": "COIN_SYMBOL",
+            "description": "Cryptocurrency symbol to collect. Select from list or enter custom."
+        },
+        {
+            "key": "collection_interval",
+            "label": "Collection Interval",
+            "type": "select",
+            "options": [
+                "10s",
+                "30s",
+                "1m",
+                "2m",
+                "5m"
+            ],
+            "default": "30s",
+            "description": "How often to collect price data"
+        },
+        {
+            "key": "replicas",
+            "label": "Replicas",
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 3,
+            "description": "Number of collector replicas"
+        },
+        {
+            "key": "cpu_limit",
+            "label": "CPU Limit",
+            "type": "select-or-custom",
+            "options": [
+                "100m",
+                "250m",
+                "500m",
+                "custom"
+            ],
+            "default": "100m",
+            "customPlaceholder": "200m",
+            "description": "Maximum CPU usage"
+        },
+        {
+            "key": "memory_limit",
+            "label": "Memory Limit",
+            "type": "select-or-custom",
+            "options": [
+                "128Mi",
+                "256Mi",
+                "512Mi",
+                "custom"
+            ],
+            "default": "128Mi",
+            "customPlaceholder": "300Mi",
+            "description": "Maximum memory usage"
+        },
+        {
+            "key": "enable_dashboard",
+            "label": "Auto-create Grafana Dashboard",
+            "type": "boolean",
+            "default": true,
+            "description": "Automatically create Grafana dashboard for this collector"
+        },
+        {
+            "key": "enable_frontend_integration",
+            "label": "Show in Frontend",
+            "type": "boolean",
+            "default": true,
+            "description": "Make data available in the crypto frontend"
+        }
+    ]
+}

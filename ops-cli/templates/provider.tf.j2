@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "grafana" {
+  url  = var.grafana_url
+  auth = var.grafana_service_account_token
+}
+
+variable "grafana_url" {
+  description = "Grafana URL"
+  type        = string
+  default     = "http://localhost:3000"
+}
+
+variable "grafana_service_account_token" {
+  description = "Grafana service account token for authentication"
+  type        = string
+  sensitive   = true
+}
+
+variable "prometheus_datasource_uid" {
+  description = "UID of the Prometheus datasource in Grafana"
+  type        = string
+  default     = "prometheus"
+}

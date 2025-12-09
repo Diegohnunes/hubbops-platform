@@ -1,0 +1,102 @@
+{
+    "id": "redis",
+    "name": "Redis Cache",
+    "description": "Redis for caching and message brokering",
+    "fields": [
+        {
+            "key": "service_name",
+            "label": "Service Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "my-redis",
+            "description": "Unique name for your Redis instance (DNS compatible)"
+        },
+        {
+            "key": "redis_version",
+            "label": "Redis Version",
+            "type": "select",
+            "options": [
+                "6.2",
+                "7.0",
+                "7.2"
+            ],
+            "default": "7.0",
+            "description": "Redis server version"
+        },
+        {
+            "key": "mode",
+            "label": "Deployment Mode",
+            "type": "select",
+            "options": [
+                "standalone",
+                "sentinel",
+                "cluster"
+            ],
+            "default": "standalone",
+            "description": "Redis deployment architecture"
+        },
+        {
+            "key": "replicas",
+            "label": "Replicas",
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 6,
+            "description": "Number of Redis replicas (for sentinel/cluster mode)"
+        },
+        {
+            "key": "max_memory",
+            "label": "Max Memory",
+            "type": "select",
+            "options": [
+                "256Mi",
+                "512Mi",
+                "1Gi",
+                "2Gi",
+                "4Gi"
+            ],
+            "default": "512Mi",
+            "description": "Maximum memory for Redis"
+        },
+        {
+            "key": "eviction_policy",
+            "label": "Eviction Policy",
+            "type": "select",
+            "options": [
+                "noeviction",
+                "allkeys-lru",
+                "volatile-lru",
+                "allkeys-random",
+                "volatile-random"
+            ],
+            "default": "allkeys-lru",
+            "description": "Memory eviction policy when maxmemory is reached"
+        },
+        {
+            "key": "cpu_limit",
+            "label": "CPU Limit",
+            "type": "select",
+            "options": [
+                "250m",
+                "500m",
+                "1000m"
+            ],
+            "default": "500m",
+            "description": "Maximum CPU allocation"
+        },
+        {
+            "key": "enable_persistence",
+            "label": "Enable Persistence",
+            "type": "boolean",
+            "default": false,
+            "description": "Enable RDB or AOF persistence"
+        },
+        {
+            "key": "enable_monitoring",
+            "label": "Enable Monitoring",
+            "type": "boolean",
+            "default": true,
+            "description": "Deploy Redis exporter for Prometheus"
+        }
+    ]
+}

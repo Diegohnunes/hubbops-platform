@@ -1,0 +1,21 @@
+/* ... existing styles ... */
+
+.error-message {
+    max-width: 600px;
+    margin: var(--space-8) auto;
+    padding: var(--space-8);
+    background: var(--card-bg);
+    border: 1px solid var(--accent-error);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.error-message p {
+    color: var(--accent-error);
+    font-size: var(--text-base);
+    margin-bottom: var(--space-4);
+}
+
+.error-message button {
+    margin-top: var(--space-4);
+}

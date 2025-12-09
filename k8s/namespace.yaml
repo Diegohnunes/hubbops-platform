@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hubbops
+  labels:
+    name: hubbops
+    app.kubernetes.io/name: hubbops-platform

@@ -1,0 +1,198 @@
+{
+    "id": "frontend-app",
+    "name": "Frontend App",
+    "description": "React/Vue/Next.js application served with Nginx",
+    "fields": [
+        {
+            "key": "service_name",
+            "label": "Service Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "my-frontend"
+        },
+        {
+            "key": "environment",
+            "label": "Environment",
+            "type": "select",
+            "options": [
+                "dev",
+                "stg",
+                "prd"
+            ],
+            "default": "dev",
+            "required": true
+        },
+        {
+            "key": "framework",
+            "label": "Framework",
+            "type": "select",
+            "options": [
+                "React",
+                "Vue",
+                "Next.js",
+                "Angular",
+                "Svelte"
+            ],
+            "default": "React"
+        },
+        {
+            "key": "node_version",
+            "label": "Node.js Version",
+            "type": "select",
+            "options": [
+                "16",
+                "18",
+                "20"
+            ],
+            "default": "18"
+        },
+        {
+            "key": "nginx_port",
+            "label": "Nginx Port",
+            "type": "number",
+            "default": 80,
+            "required": true
+        },
+        {
+            "key": "cpu_limit",
+            "label": "CPU Limit",
+            "type": "text",
+            "placeholder": "100m",
+            "default": "100m"
+        },
+        {
+            "key": "memory_limit",
+            "label": "Memory Limit",
+            "type": "text",
+            "placeholder": "128Mi",
+            "default": "128Mi"
+        },
+        {
+            "key": "replicas",
+            "label": "Replicas",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 20
+        },
+        {
+            "key": "enable_gzip",
+            "label": "Enable Gzip Compression",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "key": "enable_caching",
+            "label": "Enable Browser Caching",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "key": "enable_ingress",
+            "label": "Enable Ingress",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "section": "Advanced Options"
+        },
+        {
+            "key": "request_cpu",
+            "label": "CPU Request",
+            "type": "text",
+            "placeholder": "50m",
+            "default": "50m"
+        },
+        {
+            "key": "request_memory",
+            "label": "Memory Request",
+            "type": "text",
+            "placeholder": "64Mi",
+            "default": "64Mi"
+        },
+        {
+            "key": "autoscaling_enabled",
+            "label": "Enable Autoscaling (HPA)",
+            "type": "boolean",
+            "default": false
+        },
+        {
+            "key": "autoscaling_min_replicas",
+            "label": "Autoscaling Min Replicas",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 20
+        },
+        {
+            "key": "autoscaling_max_replicas",
+            "label": "Autoscaling Max Replicas",
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 50
+        },
+        {
+            "key": "autoscaling_target_cpu",
+            "label": "Autoscaling CPU Target (%)",
+            "type": "number",
+            "default": 70,
+            "min": 20,
+            "max": 90
+        },
+        {
+            "key": "enable_service_monitor",
+            "label": "Enable ServiceMonitor",
+            "type": "boolean",
+            "default": false
+        },
+        {
+            "key": "log_level",
+            "label": "Log Level",
+            "type": "select",
+            "options": [
+                "DEBUG",
+                "INFO",
+                "WARN",
+                "ERROR"
+            ],
+            "default": "INFO"
+        },
+        {
+            "key": "enable_tracing",
+            "label": "Enable Distributed Tracing",
+            "type": "boolean",
+            "default": false
+        },
+        {
+            "key": "tracing_endpoint",
+            "label": "Tracing Endpoint",
+            "type": "text",
+            "placeholder": "http://otel-collector:4317"
+        },
+        {
+            "key": "enable_pdb",
+            "label": "Enable PodDisruptionBudget",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "key": "pdb_min_available",
+            "label": "PDB Min Available",
+            "type": "number",
+            "default": 1,
+            "min": 1
+        },
+        {
+            "key": "extra_env_vars",
+            "label": "Extra Environment Variables",
+            "type": "keyvalue"
+        },
+        {
+            "key": "allow_unsafe_features",
+            "label": "Enable Unsafe Dev Features",
+            "type": "boolean",
+            "default": false
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "id": "generic-service",
+    "name": "Generic Service",
+    "description": "Generic template for service configuration",
+    "fields": [
+        {
+            "key": "service_name",
+            "label": "Service Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "my-service",
+            "description": "Unique name for your service"
+        },
+        {
+            "key": "replicas",
+            "label": "Replicas",
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 10,
+            "description": "Number of instances to run"
+        },
+        {
+            "key": "cpu_limit",
+            "label": "CPU Limit",
+            "type": "select-or-custom",
+            "options": [
+                "100m",
+                "250m",
+                "500m",
+                "1000m",
+                "custom"
+            ],
+            "default": "250m",
+            "customPlaceholder": "2000m",
+            "description": "Maximum CPU usage"
+        },
+        {
+            "key": "memory_limit",
+            "label": "Memory Limit",
+            "type": "select-or-custom",
+            "options": [
+                "128Mi",
+                "256Mi",
+                "512Mi",
+                "1Gi",
+                "custom"
+            ],
+            "default": "256Mi",
+            "customPlaceholder": "2Gi",
+            "description": "Maximum memory usage"
+        }
+    ]
+}
